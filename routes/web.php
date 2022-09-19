@@ -63,4 +63,6 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 	Route::resource('test-manage', App\Http\Controllers\Web\BloodTestController::class)->name('index', 'test');
 	Route::resource('radiograph', App\Http\Controllers\Web\RadiographController::class)->name('index', 'radiograph');
+	Route::resource('category', App\Http\Controllers\Web\CategoryController::class)->name('index', 'category');
+	Route::resource('drug', App\Http\Controllers\Web\DrugController::class)->name('index', 'drug');
 });

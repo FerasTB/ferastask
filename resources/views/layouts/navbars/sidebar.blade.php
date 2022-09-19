@@ -60,6 +60,14 @@
                     </a>
                 </li>
             @endcan
+            @can('radiograph_manage')
+                <li class="nav-item{{ $activePage == 'category' ? ' active' : '' }}">
+                    <a class="nav-link" href="{{ route('category') }}">
+                        <i class="material-icons">content_paste</i>
+                        <p>{{ __('Category Manage') }}</p>
+                    </a>
+                </li>
+            @endcan
             <li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('table') }}">
                     <i class="material-icons">content_paste</i>
