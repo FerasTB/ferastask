@@ -19,7 +19,7 @@ class RadiographPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role === UserRole::Doctor;
+        return $user->role === UserRole::Doctor || $user->role === UserRole::Admin;
     }
 
     /**

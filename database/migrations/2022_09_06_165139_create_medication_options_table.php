@@ -15,7 +15,6 @@ class CreateMedicationOptionsTable extends Migration
     {
         Schema::create('medication_options', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('drug_id')->constrained('drugs')->onDelete('cascade');
             $table->string('optionName');
             $table->string('comment');
             $table->timestamps();

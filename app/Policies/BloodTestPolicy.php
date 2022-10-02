@@ -19,7 +19,7 @@ class BloodTestPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role === UserRole::Doctor;
+        return ($user->role === UserRole::Admin || $user->role === UserRole::Doctor);
     }
 
     /**
@@ -42,7 +42,7 @@ class BloodTestPolicy
      */
     public function create(User $user)
     {
-        return $user->role === UserRole::Doctor;
+        return ($user->role === UserRole::Admin || $user->role === UserRole::Doctor);
     }
 
     /**

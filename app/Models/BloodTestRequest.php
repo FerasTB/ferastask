@@ -9,12 +9,14 @@ class BloodTestRequest extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['bloodTest_id'];
+
     public function request()
     {
         return $this->belongsTo(Request::class, 'request_id');
     }
 
-    public function radiograph()
+    public function bloodtest()
     {
         return $this->belongsTo(bloodTest::class, 'bloodTest_id');
     }

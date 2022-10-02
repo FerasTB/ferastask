@@ -9,8 +9,5 @@ class MedicationOption extends Model
 {
     use HasFactory;
 
-    public function drug()
-    {
-        return $this->belongsTo(Drug::class, 'drug_id');
-    }
+    protected $fillable = ['optionName', 'comment'];
 }

@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Consultation extends Model
+class Consultation extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
+    protected $fillable = ['breast_feeding', 'pregnant_month', 'pregnant', 'pain', 'startDate', 'doctor_diagnosis', 'patient_complaint', 'dateTime', 'status_id'];
     public function patient()
     {
         return $this->belongsTo(Patient::class, 'patient_id');

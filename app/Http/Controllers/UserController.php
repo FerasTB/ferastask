@@ -57,4 +57,11 @@ class UserController extends Controller
         $user = User::create($fields);
         return redirect('/user')->with('message', 'created user');
     }
+
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect('/user')->with('message', 'user deleted');
+    }
 }

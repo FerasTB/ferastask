@@ -9,6 +9,8 @@ class RadiographRequest extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['radiograph_id'];
+
     public function request()
     {
         return $this->belongsTo(Request::class, 'request_id');

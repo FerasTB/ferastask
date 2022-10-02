@@ -18,14 +18,16 @@ class CreateConsultationsTable extends Migration
             $table->id();
             $table->foreignId('status_id')->constrained('consultation_statuses')->onDelete('cascade');
             $table->foreignId('patient_id')->constrained('patients')->onDelete('cascade');
-            $table->date('dateTime');
             $table->mediumText('patient_complaint');
-            $table->longText('doctor_diagnosis');
-            $table->date('startDate');
-            $table->smallInteger('pain')->default(Pain::head);
+            $table->longText('doctor_diagnosis')->nullable();
             $table->boolean('pregnant')->default(false);
             $table->integer('pregnant_month')->default(0);
+            $table->integer('breast_feeding_month')->default(0);
             $table->boolean('breast_feeding')->default(false);
+            // date of start mean after pay and not the date of create consultation 
+            $table->timestamp('start_at')->nullable();
+            // date of end mean when the doctor submit the diagnosis
+            $table->timestamp('end_at')->nullable();
             $table->timestamps();
         });
     }

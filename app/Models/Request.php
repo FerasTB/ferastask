@@ -9,6 +9,8 @@ class Request extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['comment'];
+
     public function consultation()
     {
         return $this->belongsTo(Consultation::class, 'consultation_id');
@@ -17,5 +19,15 @@ class Request extends Model
     public function followup()
     {
         return $this->belongsTo(FollowupConsultation::class, 'followup_id');
+    }
+
+    public function bloodTests()
+    {
+        return $this->hasMany(BloodTestRequest::class, 'request_id');
+    }
+
+    public function radiographs()
+    {
+        return $this->hasMany(RadiographRequest::class, 'request_id');
     }
 }
