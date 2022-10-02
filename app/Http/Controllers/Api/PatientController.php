@@ -57,7 +57,7 @@ class PatientController extends Controller
     public function update(StorePatientRequest $request, Patient $patient)
     {
         $fields = $request->validated();
-        $patient = $patient->update($fields);
+        $patient->update($fields);
         return new PatientResource($patient);
     }
 
