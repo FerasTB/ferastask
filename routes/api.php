@@ -22,4 +22,5 @@ Route::post('/auth/reset-password', [\App\Http\Controllers\Api\AuthController::c
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('patient', App\Http\Controllers\Api\PatientController::class);
+    Route::apiResource('consultation', App\Http\Controllers\Api\consultationController::class);
 });

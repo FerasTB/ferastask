@@ -2,13 +2,12 @@
 
 namespace App\Policies;
 
-use App\Enums\UserRole;
 use App\Models\User;
-use App\Models\bloodTest;
 use App\Models\Patient;
+use App\Models\Consultation;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class BloodTestPolicy
+class ConsultationPolicy
 {
     use HandlesAuthorization;
 
@@ -20,19 +19,19 @@ class BloodTestPolicy
      */
     public function viewAny(User $user)
     {
-        return ($user->role === UserRole::Admin || $user->role === UserRole::Doctor);
+        //
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\bloodTest  $bloodTest
+     * @param  \App\Models\Consultation  $consultation
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, bloodTest $bloodTest)
+    public function view(User $user, Consultation $consultation)
     {
-        //
+        return $user->id === $consultation->patient->user_id;
     }
 
     /**
@@ -41,43 +40,43 @@ class BloodTestPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create(User $user, Patient $patient)
     {
-        return ($user->role === UserRole::Admin || $user->role === UserRole::Doctor);
+        return $user->id === $patient->user_id;
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\bloodTest  $bloodTest
+     * @param  \App\Models\Consultation  $consultation
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, bloodTest $bloodTest)
+    public function update(User $user, Consultation $consultation)
     {
-        return ($user->role === UserRole::Admin || $user->role === UserRole::Doctor);
+        return $user->id === $consultation->patient->user_id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\bloodTest  $bloodTest
+     * @param  \App\Models\Consultation  $consultation
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, bloodTest $bloodTest)
+    public function delete(User $user, Consultation $consultation)
     {
-        //
+        return $user->id === $consultation->patient->user_id;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\bloodTest  $bloodTest
+     * @param  \App\Models\Consultation  $consultation
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, bloodTest $bloodTest)
+    public function restore(User $user, Consultation $consultation)
     {
         //
     }
@@ -86,10 +85,10 @@ class BloodTestPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\bloodTest  $bloodTest
+     * @param  \App\Models\Consultation  $consultation
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, bloodTest $bloodTest)
+    public function forceDelete(User $user, Consultation $consultation)
     {
         //
     }

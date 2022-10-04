@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Patient::class, 'user_id');
     }
+
+    public function consultations()
+    {
+        return $this->hasManyThrough(Consultation::class, Patient::class);
+    }
 }

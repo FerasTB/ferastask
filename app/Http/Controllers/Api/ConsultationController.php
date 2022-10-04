@@ -2,9 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Patient;
 use App\Models\Consultation;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Models\ConsultationStatus;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Resources\ConsultationResource;
+use App\Http\Requests\StoreConsultationRequest;
+use App\Http\Requests\UpdateConsultationRequest;
 
 class ConsultationController extends Controller
 {
@@ -15,7 +23,8 @@ class ConsultationController extends Controller
      */
     public function index()
     {
-        //
+        $consultations = User::where('id', auth()->id())->with('consultations')->get();
+        return $consultations;
     }
 
     /**
@@ -34,9 +43,19 @@ class ConsultationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreConsultationRequest $request)
     {
-        //
+        $fields = $request->validated();
+        $patient = Patient::where('id', $request->patient_id)->first();
+        if ($patient) {
+            $this->authorize('create', [Consultation::class, $patient]);
+            $status = ConsultationStatus::where('name', 'new')->first();
+            $fields['status_id'] = $status->id;
+            $consultation = $patient->consultations()->create($fields);
+            return new ConsultationResource($consultation);
+        } else {
+            return response('', RESPONSE::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -47,7 +66,8 @@ class ConsultationController extends Controller
      */
     public function show(Consultation $consultation)
     {
-        //
+        $this->authorize('view', $consultation);
+        return new ConsultationResource($consultation);
     }
 
     /**
@@ -68,9 +88,17 @@ class ConsultationController extends Controller
      * @param  \App\Models\Consultation  $consultation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Consultation $consultation)
+    public function update(UpdateConsultationRequest $request, Consultation $consultation)
     {
-        //
+        $fields = $request->validated();
+        $this->authorize('update', $consultation);
+        $status = ConsultationStatus::where('id', $consultation->status_id)->first();
+        if ($status->name === 'new' || $status->name === 'paied') {
+            $consultation->update($fields);
+            return new ConsultationResource($consultation);
+        } else {
+            return response('', RESPONSE::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -81,6 +109,13 @@ class ConsultationController extends Controller
      */
     public function destroy(Consultation $consultation)
     {
-        //
+        $this->authorize('delete', $consultation);
+        $status = ConsultationStatus::where('id', $consultation->status_id)->first();
+        if ($status->name === 'new') {
+            $consultation->delete();
+            return response('', RESPONSE::HTTP_NO_CONTENT);
+        } else {
+            return response('', RESPONSE::HTTP_BAD_REQUEST);
+        }
     }
 }

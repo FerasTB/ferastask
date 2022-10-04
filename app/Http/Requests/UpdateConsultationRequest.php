@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreConsultationRequest extends FormRequest
+class UpdateConsultationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class StoreConsultationRequest extends FormRequest
     public function rules()
     {
         return [
-            'patient_id' => 'required',
             'end_at' => 'date_format|nullable',
-            'start_at' => 'required|date',
             'breast_feeding' => 'required|boolean',
             'breast_feeding_month' => 'required|integer',
             'pregnant_month' => 'required|integer',
