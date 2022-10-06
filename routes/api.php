@@ -26,5 +26,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('consultation', App\Http\Controllers\Api\consultationController::class);
     Route::group(['middleware' => 'is_admin_or_doctor'], function () {
         Route::apiResource('radiograph', App\Http\Controllers\Api\RadiographController::class);
+        Route::apiResource('bloodtest', App\Http\Controllers\Api\BloodTestController::class);
     });
 });
