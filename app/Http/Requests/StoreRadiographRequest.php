@@ -24,8 +24,8 @@ class StoreRadiographRequest extends FormRequest
     public function rules()
     {
         return [
-            'radiographName' => 'required',
-            'comment' => 'required',
+            'radiographName' => 'required|string',
+            'comment' => 'nullable|string',
         ];
     }
 }

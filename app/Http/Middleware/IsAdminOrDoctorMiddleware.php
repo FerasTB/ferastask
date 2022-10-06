@@ -5,6 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use App\Enums\UserRole;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
 
 class IsAdminOrDoctorMiddleware
 {
@@ -18,7 +20,7 @@ class IsAdminOrDoctorMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (!(auth()->user()->role === UserRole::Admin) && !(auth()->user()->role === UserRole::Doctor)) {
-            abort(403);
+            return response('', RESPONSE::HTTP_NOT_FOUND);
         }
         return $next($request);
     }
