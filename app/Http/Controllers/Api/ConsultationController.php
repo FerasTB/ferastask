@@ -13,6 +13,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Resources\ConsultationResource;
 use App\Http\Requests\StoreConsultationRequest;
 use App\Http\Requests\UpdateConsultationRequest;
+use App\Http\Resources\UserResource;
 
 class ConsultationController extends Controller
 {
@@ -23,8 +24,9 @@ class ConsultationController extends Controller
      */
     public function index()
     {
-        $consultations = User::where('id', auth()->id())->with('consultations')->get();
-        return $consultations;
+        $consultations = User::findOrFail(auth()->id());
+        // return $consultations;
+        return new UserResource($consultations);
     }
 
     /**

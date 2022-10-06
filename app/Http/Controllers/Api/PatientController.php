@@ -75,4 +75,15 @@ class PatientController extends Controller
         $patient->delete();
         return response('', RESPONSE::HTTP_NO_CONTENT);
     }
+
+    public function indexConsultations(Patient $patient)
+    {
+        // $patient = Patient::where('id', $request->patient_id)->with('consultations')->first();
+        if ($patient) {
+            $this->authorize('viewConsultation', $patient);
+            return new PatientResource($patient);
+        } else {
+            return response('', RESPONSE::HTTP_BAD_REQUEST);
+        }
+    }
 }
