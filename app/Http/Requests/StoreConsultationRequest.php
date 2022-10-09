@@ -26,12 +26,18 @@ class StoreConsultationRequest extends FormRequest
         return [
             'patient_id' => 'required',
             'end_at' => 'date_format|nullable',
-            'start_at' => 'required|date',
+            'start_at' => 'nullable|date',
             'breast_feeding' => 'required|boolean',
             'breast_feeding_month' => 'required|integer',
             'pregnant_month' => 'required|integer',
             'pregnant' => 'required|boolean',
             'patient_complaint' => 'required|string',
+            'photos.*' => 'image',
+            'audios.*' => 'mimes:mp3',
+            'pdf.*' => 'mimes:pdf',
+            'photos' => 'array|nullable',
+            'audios' => 'array|nullable',
+            'pdf' => 'array|nullable',
         ];
     }
 }

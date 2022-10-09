@@ -26,6 +26,9 @@ class ConsultationResource extends JsonResource
             'doctor_diagnosis' => $this->doctor_diagnosis,
             'patient_complaint' => $this->patient_complaint,
             'status' => ConsultationStatus::where('id', $this->status_id)->first(),
+            'photos' => $this->images,
+            'audios' => $this->audios,
+            'pdf' => $this->pdfs,
         ];
     }
 }

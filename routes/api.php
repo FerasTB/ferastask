@@ -27,5 +27,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['middleware' => 'is_admin_or_doctor'], function () {
         Route::apiResource('radiograph', App\Http\Controllers\Api\RadiographController::class);
         Route::apiResource('bloodtest', App\Http\Controllers\Api\BloodTestController::class);
+        Route::apiResource('category', App\Http\Controllers\Api\CategoryController::class);
+        Route::apiResource('drug', App\Http\Controllers\Api\DrugController::class);
     });
 });

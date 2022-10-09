@@ -15,6 +15,8 @@ use App\Http\Requests\StoreConsultationRequest;
 use App\Http\Requests\UpdateConsultationRequest;
 use App\Http\Resources\UserResource;
 
+use function PHPUnit\Framework\isEmpty;
+
 class ConsultationController extends Controller
 {
     /**
@@ -54,6 +56,24 @@ class ConsultationController extends Controller
             $status = ConsultationStatus::where('name', 'new')->first();
             $fields['status_id'] = $status->id;
             $consultation = $patient->consultations()->create($fields);
+            if ($request->photos != []) {
+                foreach ($request->photos as $photo) {
+                    $path = $photo->store('images/' . $consultation->patient_id . '/' . $consultation->id, 'public');
+                    $consultation->images()->create(['path' => $path]);
+                }
+            }
+            if ($request->audios != []) {
+                foreach ($request->audios as $audio) {
+                    $path = $audio->store('audio/' . $consultation->patient_id . '/' . $consultation->id, 'public');
+                    $consultation->audios()->create(['path' => $path]);
+                }
+            }
+            if ($request->pdf != []) {
+                foreach ($request->pdf as $pdf) {
+                    $path = $pdf->store('pdf/' . $consultation->patient_id . '/' . $consultation->id, 'public');
+                    $consultation->pdfs()->create(['path' => $path]);
+                }
+            }
             return new ConsultationResource($consultation);
         } else {
             return response('', RESPONSE::HTTP_BAD_REQUEST);

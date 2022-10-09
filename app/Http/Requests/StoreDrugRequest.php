@@ -26,6 +26,7 @@ class StoreDrugRequest extends FormRequest
         return [
             'genericName' => 'required',
             'tradeName' => 'required',
+            'category_id' => 'required',
             'note' => 'nullable',
         ];
     }

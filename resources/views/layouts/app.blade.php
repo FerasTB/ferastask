@@ -20,6 +20,7 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('material') }}/demo/demo.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+    @livewireStyles
 </head>
 
 <body class="{{ $class ?? '' }}">
@@ -162,6 +163,8 @@
     <script src="{{ asset('material') }}/js/settings.js"></script>
     <script src="../path/to/flowbite/dist/datepicker.js"></script>
     <script src="https://unpkg.com/flowbite@1.5.3/dist/datepicker.js"></script>
+    @livewireScripts
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @stack('js')
 </body>
 

@@ -37,4 +37,19 @@ class Consultation extends Model implements HasMedia
     {
         return $this->belongsToThrough(User::class, Patient::class);
     }
+
+    public function images()
+    {
+        return $this->hasMany(ConsultationPhoto::class, 'consultation_id');
+    }
+
+    public function audios()
+    {
+        return $this->hasMany(ConsultationAudio::class, 'consultation_id');
+    }
+
+    public function pdfs()
+    {
+        return $this->hasMany(ConsultationPdf::class, 'consultation_id');
+    }
 }

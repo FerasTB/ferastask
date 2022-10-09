@@ -50,15 +50,15 @@
                                                     <div class="flex flex-row items-right">
                                                         <!-- Button trigger modal -->
                                                         <button type="button" class="btn btn-secondary" data-toggle="modal"
-                                                            data-target="#exampleModalLong">
+                                                            data-target="#exampleModalLong{{ $consultation->id }}">
                                                             View Consultation
                                                         </button>
 
 
                                                         <!-- Modal -->
-                                                        <div class="modal fade" id="exampleModalLong" tabindex="-1"
-                                                            role="dialog" aria-labelledby="exampleModalLongTitle"
-                                                            aria-hidden="true">
+                                                        <div class="modal fade" id="exampleModalLong{{ $consultation->id }}"
+                                                            tabindex="-1" role="dialog"
+                                                            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">

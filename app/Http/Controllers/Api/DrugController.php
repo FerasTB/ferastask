@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreDrugRequest;
 use App\Models\Drug;
 use App\Models\DrugCategory;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreDrugRequest;
+use App\Http\Resources\DrugResource;
 
 class DrugController extends Controller
 {
@@ -18,22 +19,7 @@ class DrugController extends Controller
     public function index()
     {
         $drugs = Drug::with('category')->get();
-        return view('drug.index', [
-            'drugs' => $drugs,
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $categories = DrugCategory::all();
-        return view('drug.create', [
-            'categories' => $categories,
-        ]);
+        return DrugResource::collection($drugs);
     }
 
     /**
@@ -46,8 +32,8 @@ class DrugController extends Controller
     {
         $fields = $request->validated();
         $category = DrugCategory::findOrFail($request->category_id);
-        $category->drugs()->create($fields);
-        return redirect('/drug')->with('message', 'Drug crated');
+        $drug = $category->drugs()->create($fields);
+        return new DrugResource($drug);
     }
 
     /**
@@ -58,22 +44,7 @@ class DrugController extends Controller
      */
     public function show(Drug $drug)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Drug  $drug
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Drug $drug)
-    {
-        $categories = DrugCategory::all();
-        return view('drug.edit', [
-            'drug' => $drug,
-            'categories' => $categories
-        ]);
+        return new DrugResource($drug);
     }
 
     /**
@@ -88,12 +59,12 @@ class DrugController extends Controller
         $fields = $request->validated();
         if ($request->category_id === $drug->category_id) {
             $drug->update($fields);
-            return redirect('/drug')->with('message', 'Drug updated');
+            return new DrugResource($drug);
         } else {
             $drug->delete();
             $category = DrugCategory::findOrFail($request->category_id);
-            $category->drugs()->create($fields);
-            return redirect('/drug')->with('message', 'Drug updated');
+            $drug = $category->drugs()->create($fields);
+            return new DrugResource($drug);
         }
     }
 
