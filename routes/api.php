@@ -32,5 +32,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::apiResource('bloodtest', App\Http\Controllers\Api\BloodTestController::class);
         Route::apiResource('category', App\Http\Controllers\Api\CategoryController::class);
         Route::apiResource('drug', App\Http\Controllers\Api\DrugController::class);
+        Route::apiResource('option', App\Http\Controllers\Api\DrugOptionController::class);
     });
 });

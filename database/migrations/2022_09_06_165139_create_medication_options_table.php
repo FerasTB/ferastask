@@ -16,7 +16,7 @@ class CreateMedicationOptionsTable extends Migration
         Schema::create('medication_options', function (Blueprint $table) {
             $table->id();
             $table->string('optionName');
-            $table->string('comment');
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }
