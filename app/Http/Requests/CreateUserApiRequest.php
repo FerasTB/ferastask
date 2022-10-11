@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateUserRequest extends FormRequest
+class CreateUserApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,7 +35,7 @@ class CreateUserRequest extends FormRequest
             'password' => [
                 'required', 'confirmed', 'min:6'
             ],
-            'role' => 'required'
+            'role' => ['required', Rule::in(['Patient', 'Doctor', 'Admin', 'Ads'])],
         ];
     }
 }

@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateUserRequest extends FormRequest
+class UpdateUserApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,13 +29,11 @@ class CreateUserRequest extends FormRequest
             'name' => [
                 'required', 'min:3'
             ],
-            'email' => [
-                'required', 'email', Rule::unique((new User)->getTable())->ignore($this->route()->user->id ?? null)
-            ],
-            'password' => [
-                'required', 'confirmed', 'min:6'
-            ],
-            'role' => 'required'
+            'email' => 'required|email|max:255|exists:users',
+            'password' => 'sometimes|required|string|min:6',
+            'password_confirmation' => 'sometimes|required_with:password|same:password',
+            'role' => ['required', Rule::in(['Patient', 'Doctor', 'Admin', 'Ads'])],
+
         ];
     }
 }

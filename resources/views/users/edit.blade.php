@@ -18,8 +18,25 @@
             <label for="exampleInputPassword1">Password</label>
             <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
         </div>
+        <div class="bmd-form-group{{ $errors->has('password_confirmation') ? ' has-danger' : '' }} mt-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="material-icons">lock_outline</i>
+                    </span>
+                </div>
+                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control"
+                    placeholder="{{ __('Confirm Password...') }}" required>
+            </div>
+            @if ($errors->has('password_confirmation'))
+                <div id="password_confirmation-error" class="error text-danger pl-3" for="password_confirmation"
+                    style="display: block;">
+                    <strong>{{ $errors->first('password_confirmation') }}</strong>
+                </div>
+            @endif
+        </div>
         <div class="form-group">
-            <label for="exampleFormControlSelect1">Example select</label>
+            <label for="exampleFormControlSelect1">select role</label>
             <select class="form-control selectpicker" data-style="btn btn-link" id="exampleFormControlSelect1"
                 name="role">
                 @foreach ($userRole as $key => $value)
