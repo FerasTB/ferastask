@@ -56,12 +56,13 @@ class ConsultationController extends Controller
             $status = ConsultationStatus::where('name', 'new')->first();
             $fields['status_id'] = $status->id;
             $consultation = $patient->consultations()->create($fields);
-            if ($request->photos != []) {
-                foreach ($request->photos as $photo) {
-                    $path = $photo->store('images/' . $consultation->patient_id . '/' . $consultation->id, 'public');
-                    $consultation->images()->create(['path' => $path]);
-                }
+            // if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                return $photo;
+                $path = $photo->store('images/' . $consultation->patient_id . '/' . $consultation->id, 'public');
+                $consultation->images()->create(['path' => $path]);
             }
+            // }
             if ($request->audios != []) {
                 foreach ($request->audios as $audio) {
                     $path = $audio->store('audio/' . $consultation->patient_id . '/' . $consultation->id, 'public');

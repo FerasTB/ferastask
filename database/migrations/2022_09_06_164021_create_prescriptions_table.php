@@ -16,8 +16,8 @@ class CreatePrescriptionsTable extends Migration
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id')->constrained('patients')->onDelete('cascade');
-            $table->foreignId('consultation_id')->constrained('consultations')->onDelete('cascade');
-            $table->foreignId('followup_id')->constrained('followup_consultations')->onDelete('cascade');
+            $table->foreignId('consultation_id')->nullable()->constrained('consultations')->onDelete('cascade');
+            $table->foreignId('followup_id')->nullable()->constrained('followup_consultations')->onDelete('cascade');
             $table->mediumText('advice');
             $table->timestamps();
         });

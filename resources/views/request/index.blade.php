@@ -6,6 +6,7 @@
             <tr>
                 <th class="text-center">#</th>
                 <th>Name</th>
+                <th>Type of request</th>
                 <th>comment of request</th>
                 <th>status</th>
                 <th class="text-right">Actions</th>
@@ -16,6 +17,13 @@
                 <tr>
                     <td class="text-center">1</td>
                     <td>{{ $request->consultation->patient->name }}</td>
+                    @if (!$request->radiographs->isEmpty())
+                        <td>radiographs request</td>
+                    @elseif(!$request->bloodTests->isEmpty())
+                        <td>blood tests request </td>
+                    @else
+                        <td>request</td>
+                    @endif
                     <td>{{ $request->comment }}</td>
                     <td class="text-right">{{ App\Enums\RequestStatus::getKey($request->status) }}</td>
                     @if ($request->status === App\Enums\RequestStatus::New)

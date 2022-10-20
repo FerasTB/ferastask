@@ -32,10 +32,11 @@ class StoreConsultationRequest extends FormRequest
             'pregnant_month' => 'required|integer',
             'pregnant' => 'required|boolean',
             'patient_complaint' => 'required|string',
-            'photos.*' => 'image',
+            // 'photos' => 'nullable',
+            // 'photos.*' => 'image',
             'audios.*' => 'mimes:mp3',
             'pdf.*' => 'mimes:pdf',
-            'photos' => 'array|nullable',
+            // 'photos' => 'array|nullable',
             'audios' => 'array|nullable',
             'pdf' => 'array|nullable',
         ];

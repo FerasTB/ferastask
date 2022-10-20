@@ -33,6 +33,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::apiResource('category', App\Http\Controllers\Api\CategoryController::class);
         Route::apiResource('drug', App\Http\Controllers\Api\DrugController::class);
         Route::apiResource('option', App\Http\Controllers\Api\DrugOptionController::class);
+        Route::post('prescription/{prescription}/drug', [App\Http\Controllers\Api\PrescriptionController::class, 'addDrug']);
+        Route::delete('prescription/{prescription}/drug/{drug}', [App\Http\Controllers\Api\PrescriptionController::class, 'deleteDrug']);
+        Route::get('prescription/{prescription}/submit', [App\Http\Controllers\Api\PrescriptionController::class, 'submitPrescription']);
+        Route::apiResource('prescription', App\Http\Controllers\Api\PrescriptionController::class);
         Route::apiResource('{consultation}/req', App\Http\Controllers\Api\RequestController::class);
     });
 });
