@@ -12,6 +12,8 @@ use BenSampo\Enum\Enum;
 final class ConsultationStatus extends Enum
 {
     const New =   1;
-    const InfoRequested =   2;
-    const OptionThree = 3;
+    const Paid =   2;
+    const WaitForDoctor = 3;
+    const NeedInfo = 3;
+    const Done = 3;
 }
