@@ -32,13 +32,12 @@ class StoreConsultationRequest extends FormRequest
             'pregnant_month' => 'required|integer',
             'pregnant' => 'required|boolean',
             'patient_complaint' => 'required|string',
-            // 'photos' => 'nullable',
-            // 'photos.*' => 'image',
+            'photos.*' => 'image',
             'audios.*' => 'mimes:mp3',
             'pdf.*' => 'mimes:pdf',
-            // 'photos' => 'array|nullable',
-            'audios' => 'array|nullable',
-            'pdf' => 'array|nullable',
+            'photos' => 'nullable',
+            'audios' => 'nullable',
+            'pdf' => 'nullable',
         ];
     }
 }
