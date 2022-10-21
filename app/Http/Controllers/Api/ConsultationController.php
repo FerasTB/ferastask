@@ -26,9 +26,7 @@ class ConsultationController extends Controller
      */
     public function index()
     {
-        $consultations = User::findOrFail(auth()->id());
-        // return $consultations;
-        return new UserResource($consultations);
+        return new UserResource(auth()->user());
     }
 
     /**

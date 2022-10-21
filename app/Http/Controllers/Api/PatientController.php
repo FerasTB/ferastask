@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePatientRequest;
+use App\Http\Resources\ConsultationResource;
 use App\Http\Resources\PatientResource;
 use App\Models\Patient;
 use Illuminate\Http\Request;
@@ -78,10 +79,10 @@ class PatientController extends Controller
 
     public function indexConsultations(Patient $patient)
     {
-        // $patient = Patient::where('id', $request->patient_id)->with('consultations')->first();
         if ($patient) {
             $this->authorize('viewConsultation', $patient);
-            return new PatientResource($patient);
+            $consultations = $patient->consultations;
+            return ConsultationResource::collection($consultations);
         } else {
             return response('', RESPONSE::HTTP_BAD_REQUEST);
         }

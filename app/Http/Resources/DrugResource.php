@@ -17,7 +17,7 @@ class DrugResource extends JsonResource
         return [
             'id' => $this->id,
             'genericName' => $this->genericName,
-            'tradeName' => $this->genericName,
+            'tradeName' => $this->tradeName,
             'note' => $this->note,
             'category' => new CategoryResource($this->category),
         ];

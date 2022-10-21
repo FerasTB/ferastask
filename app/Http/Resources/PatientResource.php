@@ -24,7 +24,7 @@ class PatientResource extends JsonResource
             'work' => $this->work,
             'address' => $this->address,
             'gender' => Gender::getKey((int)$this->gender),
-            'marital' => Marital::getKey((int)$this->name),
+            'marital' => Marital::getKey((int)$this->marital),
             'consultations' => ConsultationResource::collection($this->consultations)
         ];
     }
