@@ -9,7 +9,7 @@ class Request extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['comment'];
+    protected $fillable = ['comment', 'status'];
 
     public function consultation()
     {
@@ -29,5 +29,10 @@ class Request extends Model
     public function radiographs()
     {
         return $this->hasMany(RadiographRequest::class, 'request_id');
+    }
+
+    public function attachments()
+    {
+        return $this->hasMany(RequestAttachment::class, 'request_id');
     }
 }

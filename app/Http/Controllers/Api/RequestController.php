@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Enums\RequestStatus;
+use App\Enums\UserRole;
 use App\Models\Consultation;
 use Illuminate\Http\Request;
 use App\Models\ConsultationStatus;
@@ -88,6 +89,20 @@ class RequestController extends Controller
      */
     public function show(innerRequest $request, Consultation $consultation)
     {
+        if (auth()->user()->role === UserRole::Admin || auth()->user()->role === UserRole::Doctor) {
+            if ($request->status === RequestStatus::FileUploaded) {
+                $request->update([
+                    'status' => RequestStatus::ViewedByDoctor,
+                ]);
+            }
+        }
+        if (auth()->user()->role === UserRole::Patient) {
+            if ($request->status === RequestStatus::New) {
+                $request->update([
+                    'status' => RequestStatus::ViewedByPatient,
+                ]);
+            }
+        }
         return new RequestResource($request);
     }
 

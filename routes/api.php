@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('patient', App\Http\Controllers\Api\PatientController::class);
     Route::get('patient/{patient}/consultations', [App\Http\Controllers\Api\PatientController::class, 'indexConsultations']);
     Route::apiResource('consultation', App\Http\Controllers\Api\consultationController::class);
+    Route::apiResource('request/{req}/attachment', App\Http\Controllers\Api\AttachmentController::class);
     Route::group(['middleware' => 'is_admin'], function () {
         Route::apiResource('user/manager', App\Http\Controllers\Api\UserController::class);
     });

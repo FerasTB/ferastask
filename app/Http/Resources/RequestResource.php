@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Enums\RequestStatus;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RequestResource extends JsonResource
@@ -16,9 +17,11 @@ class RequestResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'status' => RequestStatus::getKey((int)$this->status),
             'comment' => $this->comment,
             'bloodTests' => $this->bloodTests,
             'radiographs' => $this->radiographs,
+            'attachments' => $this->attachments,
         ];
     }
 }
