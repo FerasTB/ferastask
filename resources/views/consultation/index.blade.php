@@ -43,16 +43,18 @@
                                                         {{ $consultation->status->name }}
                                                     </td>
                                                     <td class="td-actions text-right">
-                                                        <div class="flex flex-row items-right">
+                                                        <div>
                                                             <!-- Button trigger modal -->
-                                                            <button type="button" class="btn btn-secondary  "
-                                                                data-toggle="modal" data-target="#exampleModalLong">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-toggle="modal"
+                                                                data-target="#exampleModalLong{{ $consultation->id }}">
                                                                 View Consultation
                                                             </button>
 
 
                                                             <!-- Modal -->
-                                                            <div class="modal fade" id="exampleModalLong" tabindex="-1"
+                                                            <div class="modal fade"
+                                                                id="exampleModalLong{{ $consultation->id }}" tabindex="-1"
                                                                 role="dialog" aria-labelledby="exampleModalLongTitle"
                                                                 aria-hidden="true">
                                                                 <div class="modal-dialog" role="document">
@@ -102,6 +104,9 @@
                                                                 </button>
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
+                                                                    <a class="dropdown-item"
+                                                                        href="{{ $consultation->id }}/request">Manage
+                                                                        Request</a>
                                                                     <a class="dropdown-item"
                                                                         href="{{ $consultation->id }}/test_request/create">request
                                                                         Test</a>

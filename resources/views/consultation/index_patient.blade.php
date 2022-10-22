@@ -93,11 +93,57 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        @if ($consultation->status->name === 'information requested')
-                                                            <a href="{{ $consultation->id }}/test_request/create"
+                                                        @if ($consultation->status->name === 'need information' || $consultation->status->name === 'wait for doctor')
+                                                            {{-- <a href="{{ $consultation->id }}/test_request/create"
                                                                 class="btn btn-secondary btn " role="button">add What
-                                                                Doctor Need</a>
+                                                                Doctor Need</a> --}}
+                                                            <table class="table">
+                                                                <thead class=" text-primary">
+                                                                    <tr>
+                                                                        <th>
+                                                                            comment
+                                                                        </th>
+                                                                        <th>
+                                                                            Status
+                                                                        </th>
+                                                                        <th class="text-right">
+                                                                            Actions
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($consultation->requests as $request)
+                                                                        <tr>
+                                                                            @if ($request->comment)
+                                                                                <td>{{ $request->comment }}</td>
+                                                                            @else
+                                                                                <td>no comment</td>
+                                                                            @endif
+                                                                            <td>{{ App\Enums\RequestStatus::getKey($request->status) }}
+                                                                            </td>
+
+                                                                            <td>
+                                                                                @if ($request->status === App\Enums\RequestStatus::New)
+                                                                                    <a href="/{{ $request->id }}/attachment/create"
+                                                                                        class="btn btn-secondary btn "
+                                                                                        role="button">add What
+                                                                                        Doctor Need</a>
+                                                                                @elseif($request->status === App\Enums\RequestStatus::FileUploaded)
+                                                                                    <a href="/{{ $request->id }}/attachment/create"
+                                                                                        class="btn btn-secondary btn "
+                                                                                        role="button">edit what you
+                                                                                        upload</a>
+                                                                                @else
+                                                                                    view what you upload
+                                                                                @endif
+                                                                            </td>
+
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
                                                         @endif
+
 
                                                 </td>
                                             </tr>

@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Enums\UserRole;
 use App\Models\Patient;
 use App\Models\Consultation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\ConsultationStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
+use function PHPUnit\Framework\isEmpty;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Resources\ConsultationResource;
+
 use App\Http\Requests\StoreConsultationRequest;
 use App\Http\Requests\UpdateConsultationRequest;
-use App\Http\Resources\UserResource;
-
-use function PHPUnit\Framework\isEmpty;
 
 class ConsultationController extends Controller
 {
@@ -26,6 +27,10 @@ class ConsultationController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->role === UserRole::Admin || auth()->user()->role === UserRole::Doctor) {
+            $consultations = Consultation::all();
+            return ConsultationResource::collection($consultations);
+        }
         return new UserResource(auth()->user());
     }
 

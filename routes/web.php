@@ -67,6 +67,8 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::resource('{consultation}/test_request', App\Http\Controllers\Web\TestRequestController::class);
 		Route::resource('{consultation}/radiograph_request', App\Http\Controllers\Web\RadiographRequestController::class);
 		Route::resource('{consultation}/request', App\Http\Controllers\Web\RequestController::class);
+		Route::resource('{consultation}/prescription', App\Http\Controllers\Web\PrescriptionController::class);
+		Route::get('{consultation}/request/{request}/viewed', [App\Http\Controllers\Web\RequestController::class, 'viewed']);
 	});
 
 	Route::resource('category', App\Http\Controllers\Web\CategoryController::class)->name('index', 'category');
@@ -75,4 +77,5 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('option', App\Http\Controllers\Web\MedicationOptionController::class)->name('index', 'option');
 	Route::resource('consultation', App\Http\Controllers\Web\ConsultationController::class)->name('index', 'consultation');
 	Route::get('{patient}/consultation', [App\Http\Controllers\Web\ConsultationController::class, 'indexForUser'])->name('user_consultation');
+	Route::resource('{req}/attachment', App\Http\Controllers\Web\AttachmentController::class)->name('index', 'attachment');;
 });

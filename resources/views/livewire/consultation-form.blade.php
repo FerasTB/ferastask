@@ -58,7 +58,7 @@
                 </div>
             @endif
         @endif
-        <div class="form-group mt-6">
+        <div class="input-group input-group-outline my-3">
             <label for="upload">breast feeding mounth</label>
             <input id="upload" type="file" wire:model="photos" multiple>
 
@@ -66,9 +66,9 @@
                 <span class="error">{{ $message }}</span>
             @enderror
         </div>
-        <div class="form-group mt-6">
-            <label for="exampleInputPassword1">Discripe Your Problem</label>
-            <input wire:model="consultation.patient_complaint" type="text" class="form-control"
+        <div class="input-group input-group-outline my-3">
+            <label class="form-label block" for="exampleInputPassword1">Discripe Your Problem</label>
+            <input class="form-control" wire:model="consultation.patient_complaint" type="text"
                 id="exampleInputPassword1">
             @if ($errors->has('consultation.patient_complaint'))
                 <div id="name-error" class="error text-danger pl-3" for="consultation.patient_complaint"

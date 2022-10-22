@@ -57,7 +57,7 @@ class RadiographRequestController extends Controller
             }
         }
         $consultation->update([
-            'status_id' => ConsultationStatus::InfoRequested,
+            'status_id' => ConsultationStatus::NeedInfo,
         ]);
         return redirect('consultation');
     }

@@ -13,7 +13,7 @@ final class ConsultationStatus extends Enum
 {
     const New =   1;
     const Paid =   2;
-    const WaitForDoctor = 3;
+    const WaitForDoctor = 4;
     const NeedInfo = 3;
-    const Done = 3;
+    const Done = 5;
 }

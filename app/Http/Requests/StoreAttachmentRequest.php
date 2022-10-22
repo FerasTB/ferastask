@@ -24,8 +24,8 @@ class StoreAttachmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'photos.*' => 'mimes:jpg,pdf,png',
             'photos' => 'nullable',
+            'photos.*' => 'mimes:jpg,png',
         ];
     }
 }
