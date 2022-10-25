@@ -29,6 +29,7 @@ class ConsultationResource extends JsonResource
             'photos' => $this->images,
             'audios' => $this->audios,
             'pdf' => $this->pdfs,
+            'patient' => new PatientResource($this->pdfs),
         ];
     }
 }

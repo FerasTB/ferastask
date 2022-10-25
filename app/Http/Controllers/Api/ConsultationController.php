@@ -32,8 +32,9 @@ class ConsultationController extends Controller
     {
         if (auth()->user()->role === UserRole::Admin || auth()->user()->role === UserRole::Doctor) {
             $consultations = Consultation::all();
-            return ConsultationResource::collection($consultations);
+            return ConsultationWithPatientAndUserResource::collection($consultations);
         }
+
         return new UserResource(auth()->user());
     }
 

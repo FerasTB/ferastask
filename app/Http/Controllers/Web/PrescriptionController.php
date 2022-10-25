@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Enums\ConsultationStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePrescriptionWebRequest;
 use App\Models\Consultation;
 use App\Models\Prescription;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PrescriptionController extends Controller
 {
@@ -37,9 +40,24 @@ class PrescriptionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Consultation $consultation)
+    public function store(StorePrescriptionWebRequest $request, Consultation $consultation)
     {
-        return $request->all();
+        $fields = $request->validated();
+        $prescription = $consultation->prescriptions()->create([
+            'advice' => $fields['advice'],
+            'patient_id' => $consultation->patient->id,
+        ]);
+        foreach ($fields['prescriptionDrug'] as $prescriptionDrug) {
+            $prescription->drugs()->create([
+                'duration' => $prescriptionDrug['duration'],
+                'drug_id' => $prescriptionDrug['drug'],
+                'medication_option_id' => $prescriptionDrug['option'],
+            ]);
+        }
+        $consultation->update([
+            'status_id' => ConsultationStatus::Done,
+        ]);
+        return redirect('consultation');
     }
 
     /**
@@ -85,5 +103,14 @@ class PrescriptionController extends Controller
     public function destroy(Prescription $prescription)
     {
         //
+    }
+
+    public function downloadPDF(Prescription $prescription)
+    {
+        // return $prescription;
+        $pdf = Pdf::loadView('prescription.pdf', [
+            'prescription' =>  $prescription,
+        ]);
+        return $pdf->download('prescription.pdf');
     }
 }
