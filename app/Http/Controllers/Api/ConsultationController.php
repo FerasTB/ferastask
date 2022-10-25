@@ -151,6 +151,6 @@ class ConsultationController extends Controller
     public function getImage(ConsultationPhoto $image)
     {
         // $this->authorize('getImage', [Consultation::class, $image]);
-        return response()->file("storage/" . $image->path);
+        return response()->file(public_path("storage/" . $image->path));
     }
 }
