@@ -2,10 +2,11 @@
 
 namespace App\Http\Resources;
 
-use App\Enums\UserRole;
+use App\Enums\Gender;
+use App\Enums\Marital;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class PatientWithOutConsultationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,9 +19,12 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'email' => $this->email,
-            'role' => UserRole::getKey($this->role),
-            'consultations' => ConsultationResource::collection($this->consultations)
+            'birthDate' => $this->birthDate,
+            'phone' => (0 . $this->phone),
+            'work' => $this->work,
+            'address' => $this->address,
+            'gender' => Gender::getKey((int)$this->gender),
+            'marital' => Marital::getKey((int)$this->marital),
         ];
     }
 }

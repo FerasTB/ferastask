@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {{-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> --}}
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ __('Material Dashboard Laravel - Free Frontend Preset for Laravel') }}</title>
@@ -20,6 +21,7 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('material') }}/demo/demo.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+    <link id="pagestyle" href="../assets/css/material-dashboard.css" rel="stylesheet" />
     @livewireStyles
 </head>
 
@@ -165,6 +167,16 @@
     <script src="https://unpkg.com/flowbite@1.5.3/dist/datepicker.js"></script>
     @livewireScripts
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+
+    <!-- Plugin for the charts, full documentation here: https://www.chartjs.org/ -->
+    <script src="../assets/js/plugins/chartjs.min.js"></script>
+    <script src="../assets/js/plugins/Chart.extension.js"></script>
+
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="../assets/js/material-dashboard.min.js"></script>
     @stack('js')
 </body>
 

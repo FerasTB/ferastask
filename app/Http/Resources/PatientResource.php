@@ -20,7 +20,7 @@ class PatientResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'birthDate' => $this->birthDate,
-            'phone' => $this->phone,
+            'phone' => (0 . $this->phone),
             'work' => $this->work,
             'address' => $this->address,
             'gender' => Gender::getKey((int)$this->gender),

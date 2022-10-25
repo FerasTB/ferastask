@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Consultation;
 use App\Models\Prescription;
 use Illuminate\Http\Request;
 
@@ -23,9 +24,11 @@ class PrescriptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Consultation $consultation)
     {
-        //
+        return view('prescription.create', [
+            'consultation' => $consultation,
+        ]);
     }
 
     /**
@@ -34,9 +37,9 @@ class PrescriptionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Consultation $consultation)
     {
-        // 
+        return $request->all();
     }
 
     /**

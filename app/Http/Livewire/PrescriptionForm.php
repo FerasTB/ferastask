@@ -2,42 +2,62 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Prescription;
-use App\Models\PrescriptionDrug;
+use App\Models\Drug;
 use Livewire\Component;
+use App\Models\DrugCategory;
+use App\Models\Prescription;
+use App\Models\MedicationOption;
+use App\Models\PrescriptionDrug;
 
 class PrescriptionForm extends Component
 {
 
-    public Prescription $prescription;
-    public $drug;
-    public $option;
+    // public Prescription $prescription;
+    public $consultation;
+    // public $category;
+    // public $drug;
+    // public $option;
+    public $prescriptionDrug = [];
 
-    protected $rules = [
-        'prescription.advice' => 'required|string',
-        'consultation.pregnant' => 'boolean',
-        'consultation.breast_feeding' => 'boolean',
-        'consultation.pregnant_month' => 'integer',
-        'consultation.breast_feeding_month' => 'integer',
-        'consultation.patient_id' => 'integer',
-        'consultation.status_id' => 'integer',
-        'photos.*' => 'image',
-    ];
+    public $categories;
+    public $drugs;
+    public $options;
+
+    // protected $rules = [
+    //     'prescription.advice' => 'required|string',
+    //     'consultation.pregnant' => 'boolean',
+    //     'consultation.breast_feeding' => 'boolean',
+    //     'consultation.pregnant_month' => 'integer',
+    //     'consultation.breast_feeding_month' => 'integer',
+    //     'consultation.patient_id' => 'integer',
+    //     'consultation.status_id' => 'integer',
+    //     'photos.*' => 'image',
+    // ];
     public function mount()
     {
-        $this->consultation = new Prescription();
-        $this->consultation->pregnant = 0;
-        $this->consultation->pregnant_month = 0;
-        $this->consultation->breast_feeding = 0;
-        $this->consultation->breast_feeding_month = 0;
-        $this->status = ConsultationStatus::where('name', 'new')->first();
-        $this->consultation->status_id = $this->status->id;
-        $this->patients = auth()->user()->patients;
-        // $this->patient = Patient::find($this->consultation->patient_id);
-        // $this->patientId = '';
+        $this->categories = DrugCategory::all();
+        // $this->drugs = Drug::all();
+        $this->drugs = collect();
+        $this->options = MedicationOption::all();
+        // $this->drugs = Drug::where('category_id', $value)->get();
+        $this->prescriptionDrug = [
+            ['category' => '', 'drugs' => '', 'drug' => '', 'option' => '', 'duration' => '1 week']
+        ];
+    }
+
+    public function addDrug()
+    {
+        $this->prescriptionDrug[] = ['category' => '1', 'drugs' => '', 'drug' => '', 'option' => '', 'duration' => '1 week'];
     }
     public function render()
     {
         return view('livewire.prescription-form');
+    }
+
+    public function updatedPrescriptionDrugCategory($value)
+    {
+        dump($this->updatedPrescriptionDrug);
+        $this->drugs = Drug::where('category_id', $value)->get();
+        // $this->PrescriptionDrug[$index]->drug = $this->drugs->first()->id;
     }
 }

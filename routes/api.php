@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('request/{req}/attachment', App\Http\Controllers\Api\AttachmentController::class);
     Route::group(['middleware' => 'is_admin'], function () {
         Route::apiResource('user/manager', App\Http\Controllers\Api\UserController::class);
+        Route::get('image/{image}', [App\Http\Controllers\Api\ConsultationController::class, 'getImage']);
     });
     Route::group(['middleware' => 'is_admin_or_doctor'], function () {
         Route::apiResource('radiograph', App\Http\Controllers\Api\RadiographController::class);

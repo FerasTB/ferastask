@@ -17,6 +17,9 @@ use App\Http\Resources\ConsultationResource;
 
 use App\Http\Requests\StoreConsultationRequest;
 use App\Http\Requests\UpdateConsultationRequest;
+use App\Http\Resources\ConsultationWithPatientAndUserResource;
+use App\Models\ConsultationImage;
+use App\Models\ConsultationPhoto;
 
 class ConsultationController extends Controller
 {
@@ -92,7 +95,7 @@ class ConsultationController extends Controller
     public function show(Consultation $consultation)
     {
         $this->authorize('view', $consultation);
-        return new ConsultationResource($consultation);
+        return new ConsultationWithPatientAndUserResource($consultation);
     }
 
     /**
@@ -142,5 +145,11 @@ class ConsultationController extends Controller
         } else {
             return response('', RESPONSE::HTTP_BAD_REQUEST);
         }
+    }
+
+    public function getImage(ConsultationPhoto $image)
+    {
+        // $this->authorize('getImage', [Consultation::class, $image]);
+        return response()->file("storage/" . $image->path);
     }
 }
