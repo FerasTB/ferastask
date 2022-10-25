@@ -20,7 +20,7 @@ class PrescriptionForm extends Component
     public $prescriptionDrug = [];
 
     public $categories;
-    public $drugs;
+    // public $drugs;
     public $options;
 
     // protected $rules = [
@@ -37,27 +37,31 @@ class PrescriptionForm extends Component
     {
         $this->categories = DrugCategory::all();
         // $this->drugs = Drug::all();
-        $this->drugs = collect();
+        // $this->drugs = collect();
         $this->options = MedicationOption::all();
         // $this->drugs = Drug::where('category_id', $value)->get();
         $this->prescriptionDrug = [
-            ['category' => '', 'drugs' => '', 'drug' => '', 'option' => '', 'duration' => '1 week']
+            ['category' => '', 'drugs' => [''], 'drug' => '', 'option' => '', 'duration' => '1 week']
         ];
     }
 
     public function addDrug()
     {
-        $this->prescriptionDrug[] = ['category' => '1', 'drugs' => '', 'drug' => '', 'option' => '', 'duration' => '1 week'];
+        $this->prescriptionDrug[] = ['category' => '', 'drugs' => [''], 'drug' => '', 'option' => '', 'duration' => '1 week'];
     }
     public function render()
     {
         return view('livewire.prescription-form');
     }
 
-    public function updatedPrescriptionDrugCategory($value)
+    public function updated($key, $value)
     {
-        dump($this->updatedPrescriptionDrug);
-        $this->drugs = Drug::where('category_id', $value)->get();
+        // dump($this->updatedPrescriptionDrug);
+        $parts = explode(".", $key);
+        if ($parts[2] == "category") {
+            $this->prescriptionDrug[$parts[1]]['drugs'] = Drug::where('category_id', $value)->get();
+        }
+        // $this->drugs = Drug::where('category_id', $value)->get();
         // $this->PrescriptionDrug[$index]->drug = $this->drugs->first()->id;
     }
 }

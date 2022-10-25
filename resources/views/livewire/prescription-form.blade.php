@@ -27,12 +27,14 @@
             <select class="form-control selectpicker" data-style="btn btn-link"
                 wire:model="prescriptionDrug.{{ $index }}.drug"
                 name="prescriptionDrug[{{ $index }}][drug]">
-                @if ($drugs->count() == 0)
+                @if ($prescriptionDrug[$index]['drugs'] == [''])
                     <option value="">chose the category first</option>
                 @endif
-                @foreach ($drugs as $drug)
-                    <option value="{{ $drug->id }}"> {{ $drug->tradeName }}</option>
-                @endforeach
+                @if ($prescriptionDrug[$index]['drugs'] != [''])
+                    @foreach ($prescriptionDrug[$index]['drugs'] as $drug)
+                        <option value="{{ $drug['id'] }}"> {{ $drug['tradeName'] }}</option>
+                    @endforeach
+                @endif
             </select>
         </div>
         {{-- @if ($prescriptionDrug . $index . drug) --}}
