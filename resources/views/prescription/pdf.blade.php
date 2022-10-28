@@ -6,7 +6,16 @@
     <title>Prescription</title>
 </head>
 
-<body>
+<body class="dark:bg-gray-800 dark:text-white">
+    {{-- <style>
+        .page-break {
+            page-break-after: always;
+        }
+
+        .background {
+            background-color: brown;
+        }
+    </style> --}}
     <h1>{{ $prescription->advice }}</h1>
     <table class="table table-bordered">
         <tr>

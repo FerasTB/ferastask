@@ -18,7 +18,9 @@ use App\Http\Resources\ConsultationResource;
 use App\Http\Requests\StoreConsultationRequest;
 use App\Http\Requests\UpdateConsultationRequest;
 use App\Http\Resources\ConsultationWithPatientAndUserResource;
+use App\Models\ConsultationAudio;
 use App\Models\ConsultationImage;
+use App\Models\ConsultationPdf;
 use App\Models\ConsultationPhoto;
 
 class ConsultationController extends Controller
@@ -150,7 +152,17 @@ class ConsultationController extends Controller
 
     public function getImage(ConsultationPhoto $image)
     {
-        // $this->authorize('getImage', [Consultation::class, $image]);
+        $this->authorize('getImage', [Consultation::class, $image]);
         return response()->file(public_path("storage/" . $image->path));
+    }
+    public function getPdf(ConsultationPdf $pdf)
+    {
+        $this->authorize('getPdf', [Consultation::class, $pdf]);
+        return response()->file(public_path("storage/" . $pdf->path));
+    }
+    public function getAudio(ConsultationAudio $audio)
+    {
+        $this->authorize('getAudio', [Consultation::class, $audio]);
+        return response()->file(public_path("storage/" . $audio->path));
     }
 }

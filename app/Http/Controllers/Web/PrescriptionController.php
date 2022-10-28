@@ -112,5 +112,9 @@ class PrescriptionController extends Controller
             'prescription' =>  $prescription,
         ]);
         return $pdf->download('prescription.pdf');
+
+        // return view('prescription.pdf', [
+        //     'prescription' =>  $prescription,
+        // ]);
     }
 }
