@@ -30,6 +30,7 @@ class ConsultationResource extends JsonResource
             'audios' => $this->audios,
             'pdf' => $this->pdfs,
             'patient' => new PatientResource($this->pdfs),
+            'created_at' => $this->created_at,
         ];
     }
 }

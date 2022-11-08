@@ -31,6 +31,8 @@ class ConsultationWithPatientAndUserResource extends JsonResource
             'pdf' => $this->pdfs,
             'patient' => new PatientWithOutConsultationResource($this->patient),
             'user' => new UserIndexResource($this->user),
+            'created_at' => $this->created_at,
+
 
         ];
     }

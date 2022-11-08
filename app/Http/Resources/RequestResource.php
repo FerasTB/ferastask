@@ -22,6 +22,8 @@ class RequestResource extends JsonResource
             'bloodTests' => $this->bloodTests,
             'radiographs' => $this->radiographs,
             'attachments' => $this->attachments,
+            'created_at' => $this->created_at,
+
         ];
     }
 }
