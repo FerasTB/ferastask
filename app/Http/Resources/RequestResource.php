@@ -19,8 +19,8 @@ class RequestResource extends JsonResource
             'id' => $this->id,
             'status' => RequestStatus::getKey((int)$this->status),
             'comment' => $this->comment,
-            'bloodTests' => BloodTestResource::collection($this->bloodTests),
-            'radiographs' => RadiographResource::collection($this->radiographs),
+            'bloodTests' => BloodTestResource::collection($this->bloodTests->bloodTest_id),
+            'radiographs' => RadiographResource::collection($this->radiographs->radiograph_id),
             'attachments' => $this->attachments,
             'created_at' => $this->created_at,
 
