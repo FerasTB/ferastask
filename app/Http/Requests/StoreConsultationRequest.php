@@ -33,7 +33,7 @@ class StoreConsultationRequest extends FormRequest
             'pregnant' => 'required|boolean',
             'patient_complaint' => 'required|string',
             'photos.*' => 'image',
-            'audios.*' => 'mimes:mp3',
+            'audios.*' => 'mimes:mp3,aacADTS',
             'pdf.*' => 'mimes:pdf',
             'photos' => 'nullable',
             'audios' => 'nullable',
