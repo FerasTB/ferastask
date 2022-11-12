@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Models\bloodTest;
 use App\Enums\RequestStatus;
+use App\Models\Radiograph;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RequestResource extends JsonResource
@@ -19,8 +21,8 @@ class RequestResource extends JsonResource
             'id' => $this->id,
             'status' => RequestStatus::getKey((int)$this->status),
             'comment' => $this->comment,
-            'bloodTests' => BloodTestResource::collection($this->bloodTests->bloodTest_id),
-            'radiographs' => RadiographResource::collection($this->radiographs->radiograph_id),
+            'bloodTests' => new BloodTestResource(bloodTest::find($this->bloodTests->bloodTest_id)),
+            'radiographs' => new RadiographResource(Radiograph::find($this->radiographs->radiograph_id)),
             'attachments' => $this->attachments,
             'created_at' => $this->created_at,
 
