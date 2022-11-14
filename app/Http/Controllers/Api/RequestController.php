@@ -26,6 +26,7 @@ class RequestController extends Controller
     public function index(Consultation $consultation)
     {
         $request = $consultation->requests;
+        // return $request[0]->bloodTests;
         return RequestResource::collection($request);
     }
 
