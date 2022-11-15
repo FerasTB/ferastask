@@ -11,6 +11,8 @@ class RequestAttachment extends Model
 
     protected $fillable = ['path'];
 
+
+
     public function request()
     {
         return $this->belongsTo(Request::class, 'request_id');

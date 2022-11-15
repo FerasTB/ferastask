@@ -10,6 +10,7 @@ use App\Models\RequestAttachment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAttachmentRequest;
 use App\Http\Resources\RequestResource;
+use App\Models\Attachment;
 use App\Models\Request as InnerRequest;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -103,5 +104,11 @@ class AttachmentController extends Controller
         } else {
             return response('', Response::HTTP_BAD_REQUEST);
         }
+    }
+
+    public function getImage(RequestAttachment $attachment)
+    {
+        $this->authorize('getAttachment', [Attachment::class, $attachment]);
+        return response()->file(public_path("storage/" . $attachment->path));
     }
 }

@@ -25,11 +25,16 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('patient/{patient}/consultations', [App\Http\Controllers\Api\PatientController::class, 'indexConsultations']);
     Route::apiResource('consultation', App\Http\Controllers\Api\consultationController::class);
     Route::apiResource('request/{req}/attachment', App\Http\Controllers\Api\AttachmentController::class);
+    Route::get('ticket/{ticket}', [App\Http\Controllers\Api\TicketController::class, 'show']);
+    Route::post('ticket', [App\Http\Controllers\Api\TicketController::class, 'store']);
+    Route::post('{ticket}/comment', [App\Http\Controllers\Api\CommentController::class, 'store']);
     Route::get('image/{image}', [App\Http\Controllers\Api\ConsultationController::class, 'getImage']);
+    Route::get('attachment/{attachment}', [App\Http\Controllers\Api\AttachmentController::class, 'getAttachment']);
     Route::get('pdf/{pdf}', [App\Http\Controllers\Api\ConsultationController::class, 'getPdf']);
     Route::get('audio/{audio}', [App\Http\Controllers\Api\ConsultationController::class, 'getAudio']);
     Route::group(['middleware' => 'is_admin'], function () {
         Route::apiResource('user/manager', App\Http\Controllers\Api\UserController::class);
+        Route::put('ticket/{ticket}', [App\Http\Controllers\Api\TicketController::class, 'update']);
     });
     Route::group(['middleware' => 'is_admin_or_doctor'], function () {
         Route::apiResource('radiograph', App\Http\Controllers\Api\RadiographController::class);
