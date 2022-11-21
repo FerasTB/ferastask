@@ -37,16 +37,16 @@ class AttachmentController extends Controller
     public function store(StoreAttachmentRequest $request, InnerRequest $req)
     {
         $patient = Patient::where('id', $req->consultation->patient->id)->first();
-        if ($req->status === RequestStatus::FileUploaded) {
-            foreach ($req->attachments as $attachment) {
-                $attachment->delete();
-            }
-            foreach ($request->file('photos') as $photo) {
-                $path = $photo->store('images/attachment/' . $req->consultation->patient->id . '/' . $req->id, 'public');
-                $req->attachments()->create(['path' => $path]);
-            }
-            return new RequestResource($req);
-        } else {
+        if ($req->status != RequestStatus::ViewedByDoctor) {
+            //     foreach ($req->attachments as $attachment) {
+            //         $attachment->delete();
+            //     }
+            //     foreach ($request->file('photos') as $photo) {
+            //         $path = $photo->store('images/attachment/' . $req->consultation->patient->id . '/' . $req->id, 'public');
+            //         $req->attachments()->create(['path' => $path]);
+            //     }
+            //     return new RequestResource($req);
+            // } else {
             $this->authorize('create', [RequestAttachment::class, $patient]);
             if ($request->hasFile('photos')) {
                 foreach ($request->file('photos') as $photo) {
@@ -59,6 +59,7 @@ class AttachmentController extends Controller
             }
             return new RequestResource($req);
         }
+        return response('', Response::HTTP_BAD_REQUEST);
     }
 
     /**
@@ -106,7 +107,7 @@ class AttachmentController extends Controller
         }
     }
 
-    public function getImage(RequestAttachment $attachment)
+    public function getAttachment(RequestAttachment $attachment)
     {
         $this->authorize('getAttachment', [Attachment::class, $attachment]);
         return response()->file(public_path("storage/" . $attachment->path));

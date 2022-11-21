@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\TicketStatus;
 use App\Enums\UserRole;
 use App\Models\Comment;
 use App\Models\TicketSupport;
@@ -43,7 +44,7 @@ class CommentPolicy
      */
     public function store(User $user, TicketSupport $ticket)
     {
-        return ($user->id == $ticket->user_id || $ticket->agent == $user->role || $user->role == UserRole::Admin);
+        return (($user->id == $ticket->user_id || $ticket->agent == $user->role || $user->role == UserRole::Admin) && ($ticket->status != TicketStatus::Close));
     }
 
     /**

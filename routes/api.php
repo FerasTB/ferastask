@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('attachment/{attachment}', [App\Http\Controllers\Api\AttachmentController::class, 'getAttachment']);
     Route::get('pdf/{pdf}', [App\Http\Controllers\Api\ConsultationController::class, 'getPdf']);
     Route::get('audio/{audio}', [App\Http\Controllers\Api\ConsultationController::class, 'getAudio']);
+    Route::delete('req/{req}/attachment', [App\Http\Controllers\Api\RequestController::class, 'deleteAttachment']);
     Route::group(['middleware' => 'is_admin'], function () {
         Route::apiResource('user/manager', App\Http\Controllers\Api\UserController::class);
         Route::put('ticket/{ticket}', [App\Http\Controllers\Api\TicketController::class, 'update']);

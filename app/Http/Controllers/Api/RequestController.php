@@ -12,6 +12,7 @@ use App\Models\Request as innerRequest;
 use App\Http\Requests\StoreRequestApiRequest;
 use App\Http\Requests\StoreRequestRequest;
 use App\Http\Resources\RequestResource;
+use Illuminate\Http\Client\Response as ClientResponse;
 use Illuminate\Http\Response;
 use Illuminate\Http\Response as HttpResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -179,5 +180,17 @@ class RequestController extends Controller
         } else {
             return response('', Response::HTTP_BAD_REQUEST);
         }
+    }
+
+    public function deleteAttachment(innerRequest $req)
+    {
+
+        if ($req->status === RequestStatus::FileUploaded) {
+            foreach ($req->attachments as $attachment) {
+                $attachment->delete();
+            }
+            return response('', Response::HTTP_NO_CONTENT);
+        }
+        return response('', Response::HTTP_BAD_REQUEST);
     }
 }
