@@ -115,12 +115,63 @@ class RequestController extends Controller
      * @param  \App\Models\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // public function update(StoreRequestApiRequest $request, Consultation $consultation, innerRequest $req)
+    // {
+    //     if ($req->status === RequestStatus::New) {
+    //         $req->delete();
+    //         if ($request->type === 'Normal') {
+    //             $normalRequest = $consultation->requests()->create([
+    //                 'comment' => $request->comment,
+    //             ]);
+    //             $status = ConsultationStatus::where('name', 'need information')->first();
+    //             $status_id = $status->id;
+    //             $consultation->update([
+    //                 'status' => $status_id,
+    //             ]);
+    //             return new RequestResource($normalRequest);
+    //         } elseif ($request->type === 'BloodTest') {
+    //             $bloodtestRequest = $consultation->requests()->create([
+    //                 'comment' => $request->comment,
+    //             ]);
+    //             // return $request->BloodTestIdArray; 
+    //             foreach ($request->BloodTestIdArray as $test) {
+    //                 $bloodtestRequest->bloodTests()->create([
+    //                     'bloodTest_id' => $test,
+    //                 ]);
+    //             }
+    //             $status = ConsultationStatus::where('name', 'need information')->first();
+    //             $status_id = $status->id;
+    //             $consultation->update([
+    //                 'status' => $status_id,
+    //             ]);
+    //             return new RequestResource($bloodtestRequest);
+    //         } else {
+    //             $radiographRequest = $consultation->requests()->create([
+    //                 'comment' => $request->comment,
+    //             ]);
+    //             foreach ($request->RadiographIdArray as $radiograph) {
+    //                 $radiographRequest->radiographs()->create([
+    //                     'radiograph_id' => $radiograph,
+    //                 ]);
+    //             }
+    //             $status = ConsultationStatus::where('name', 'need information')->first();
+    //             $status_id = $status->id;
+    //             $consultation->update([
+    //                 'status' => $status_id,
+    //             ]);
+    //             return new RequestResource($radiographRequest);
+    //         }
+    //     } else {
+    //         return response('', Response::HTTP_BAD_REQUEST);
+    //     }
+    // }
+
     public function update(StoreRequestApiRequest $request, Consultation $consultation, innerRequest $req)
     {
         if ($req->status === RequestStatus::New) {
-            $req->delete();
+            // $req->delete();
             if ($request->type === 'Normal') {
-                $normalRequest = $consultation->requests()->create([
+                $req->update([
                     'comment' => $request->comment,
                 ]);
                 $status = ConsultationStatus::where('name', 'need information')->first();
@@ -128,14 +179,16 @@ class RequestController extends Controller
                 $consultation->update([
                     'status' => $status_id,
                 ]);
-                return new RequestResource($normalRequest);
+                return new RequestResource($req);
             } elseif ($request->type === 'BloodTest') {
-                $bloodtestRequest = $consultation->requests()->create([
+                $req->update([
                     'comment' => $request->comment,
                 ]);
-                // return $request->BloodTestIdArray; 
+                foreach ($req->bloodTests as $test) {
+                    $test->delete();
+                }
                 foreach ($request->BloodTestIdArray as $test) {
-                    $bloodtestRequest->bloodTests()->create([
+                    $req->bloodTests()->create([
                         'bloodTest_id' => $test,
                     ]);
                 }
@@ -144,13 +197,16 @@ class RequestController extends Controller
                 $consultation->update([
                     'status' => $status_id,
                 ]);
-                return new RequestResource($bloodtestRequest);
+                return new RequestResource($req);
             } else {
-                $radiographRequest = $consultation->requests()->create([
+                $req->update([
                     'comment' => $request->comment,
                 ]);
+                foreach ($req->radiographs as $radiograph) {
+                    $radiograph->delete();
+                }
                 foreach ($request->RadiographIdArray as $radiograph) {
-                    $radiographRequest->radiographs()->create([
+                    $req->radiographs()->create([
                         'radiograph_id' => $radiograph,
                     ]);
                 }
@@ -159,13 +215,12 @@ class RequestController extends Controller
                 $consultation->update([
                     'status' => $status_id,
                 ]);
-                return new RequestResource($radiographRequest);
+                return new RequestResource($req);
             }
         } else {
             return response('', Response::HTTP_BAD_REQUEST);
         }
     }
-
     /**
      * Remove the specified resource from storage.
      *
