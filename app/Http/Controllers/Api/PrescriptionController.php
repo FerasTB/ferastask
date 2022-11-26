@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StorePatientRequest;
-use App\Http\Requests\StorePrescriptionDrugRequest;
-use App\Http\Requests\StorePrescriptionRequest;
-use App\Http\Requests\UpdatePrescriptionRequest;
-use App\Http\Resources\PrescriptionResource;
 use App\Models\Consultation;
-use App\Models\ConsultationStatus;
-use App\Models\FollowupConsultation;
 use App\Models\Prescription;
-use App\Models\PrescriptionDrug;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\PrescriptionDrug;
+use App\Models\ConsultationStatus;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\DrugResource;
+use App\Models\FollowupConsultation;
+use App\Http\Requests\StorePatientRequest;
+use App\Http\Resources\PrescriptionResource;
+use App\Http\Requests\StorePrescriptionRequest;
+use App\Http\Requests\UpdatePrescriptionRequest;
+use App\Http\Resources\PrescriptionDrugResource;
+use App\Http\Requests\StorePrescriptionDrugRequest;
 
 class PrescriptionController extends Controller
 {
@@ -118,9 +120,22 @@ class PrescriptionController extends Controller
         if ($status->name === 'wait for doctor') {
             $fields = $request->validated();
             $drug = $prescription->drugs()->create($fields);
-            return new PrescriptionResource($prescription);
+            return new PrescriptionDrugResource($drug);
         } else {
             return response('you can not add drug to this consultation', Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function editDrug(StorePrescriptionDrugRequest $request, PrescriptionDrug $drug)
+    {
+        $consultation = $drug->prescription->consultation;
+        $status = ConsultationStatus::find($consultation->status_id);
+        if ($status->name === 'wait for doctor') {
+            $fields = $request->validated();
+            $drug->update($fields);
+            return new PrescriptionDrugResource($drug);
+        } else {
+            return response('you can not update drug to this consultation', Response::HTTP_BAD_REQUEST);
         }
     }
 

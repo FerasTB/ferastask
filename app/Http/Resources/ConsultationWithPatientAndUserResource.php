@@ -23,7 +23,7 @@ class ConsultationWithPatientAndUserResource extends JsonResource
             'breast_feeding_month' => $this->breast_feeding_month,
             'pregnant_month' => $this->pregnant_month,
             'pregnant' => $this->pregnant,
-            'doctor_diagnosis' => $this->doctor_diagnosis,
+            'prescription' => new PrescriptionIndexResource($this->prescription),
             'patient_complaint' => $this->patient_complaint,
             'status' => ConsultationStatus::where('id', $this->status_id)->first(),
             'photos' => $this->images,

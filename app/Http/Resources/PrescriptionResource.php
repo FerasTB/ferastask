@@ -23,7 +23,7 @@ class PrescriptionResource extends JsonResource
             'patient' => new PatientIndexResource(Patient::findOrFail($this->patient_id)),
             'consultation' => new ConsultationResource(Consultation::find($this->consultation_id)),
             'followup' => FollowupConsultation::find($this->followup_id),
-            'drug' => $this->drugs,
+            'drug' => PrescriptionDrugResource::collection($this->drugs),
         ];
     }
 }

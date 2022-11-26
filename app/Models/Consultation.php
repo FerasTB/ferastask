@@ -23,7 +23,7 @@ class Consultation extends Model implements HasMedia
         return $this->belongsTo(ConsultationStatus::class, 'status_id');
     }
 
-    public function prescriptions()
+    public function prescription()
     {
         return $this->hasMany(Prescription::class, 'consultation_id');
     }
