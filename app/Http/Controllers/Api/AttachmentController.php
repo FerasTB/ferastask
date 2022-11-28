@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\ConsultationStatus;
-use App\Enums\RequestStatus;
+use App\Enums\UserRole;
 use App\Models\Patient;
+use App\Models\Attachment;
+use App\Enums\RequestStatus;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Enums\ConsultationStatus;
 use App\Models\RequestAttachment;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAttachmentRequest;
 use App\Http\Resources\RequestResource;
-use App\Models\Attachment;
 use App\Models\Request as InnerRequest;
-use Illuminate\Http\Response;
+use App\Http\Requests\StoreAttachmentRequest;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class AttachmentController extends Controller

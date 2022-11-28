@@ -96,6 +96,11 @@ class RequestController extends Controller
                 $request->update([
                     'status' => RequestStatus::ViewedByDoctor,
                 ]);
+                $status = ConsultationStatus::where('name', 'wait for doctor')->first();
+                $status_id = $status->id;
+                $consultation->update([
+                    'status_id' => $status_id,
+                ]);
             }
         }
         if (auth()->user()->role === UserRole::Patient) {

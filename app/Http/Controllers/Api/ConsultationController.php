@@ -98,6 +98,13 @@ class ConsultationController extends Controller
     public function show(Consultation $consultation)
     {
         $this->authorize('view', $consultation);
+        if ((auth()->user()->role == UserRole::Admin || auth()->user()->role == UserRole::Doctor) && $consultation->status->name === 'paid') {
+            $status = ConsultationStatus::where('name', 'wait for doctor')->first();
+            $status_id = $status->id;
+            $consultation->update([
+                'status_id' => $status_id,
+            ]);
+        }
         return new ConsultationWithPatientAndUserResource($consultation);
     }
 
@@ -124,7 +131,7 @@ class ConsultationController extends Controller
         $fields = $request->validated();
         $this->authorize('update', $consultation);
         $status = ConsultationStatus::where('id', $consultation->status_id)->first();
-        if ($status->name === 'new' || $status->name === 'paied') {
+        if ($status->name === 'new' || $status->name === 'paid') {
             $consultation->update($fields);
             return new ConsultationResource($consultation);
         } else {
@@ -164,5 +171,20 @@ class ConsultationController extends Controller
     {
         $this->authorize('getAudio', [Consultation::class, $audio]);
         return response()->file(public_path("storage/" . $audio->path));
+    }
+
+    public function submitAsPaid(Consultation $consultation)
+    {
+        $this->authorize('view', $consultation);
+        if ($consultation->status->name === 'new') {
+            $status = ConsultationStatus::where('name', 'paid')->first();
+            $status_id = $status->id;
+            $consultation->update([
+                'status_id' => $status_id,
+            ]);
+            return new ConsultationWithPatientAndUserResource($consultation);
+        } else {
+            return response('error', Response::HTTP_BAD_REQUEST);
+        }
     }
 }
