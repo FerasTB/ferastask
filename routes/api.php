@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::apiResource('drug', App\Http\Controllers\Api\DrugController::class);
         Route::apiResource('option', App\Http\Controllers\Api\DrugOptionController::class);
         Route::post('prescription/{prescription}/drug', [App\Http\Controllers\Api\PrescriptionController::class, 'addDrug']);
+        Route::put('prescription/{prescription}/drug/{drug}/edit', [App\Http\Controllers\Api\PrescriptionController::class, 'editDrug']);
         Route::delete('prescription/{prescription}/drug/{drug}', [App\Http\Controllers\Api\PrescriptionController::class, 'deleteDrug']);
         Route::get('prescription/{prescription}/submit', [App\Http\Controllers\Api\PrescriptionController::class, 'submitPrescription']);
         Route::apiResource('prescription', App\Http\Controllers\Api\PrescriptionController::class);

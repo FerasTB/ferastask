@@ -126,9 +126,9 @@ class PrescriptionController extends Controller
         }
     }
 
-    public function editDrug(StorePrescriptionDrugRequest $request, PrescriptionDrug $drug)
+    public function editDrug(StorePrescriptionDrugRequest $request, Prescription $prescription, PrescriptionDrug $drug)
     {
-        $consultation = $drug->prescription->consultation;
+        $consultation = $prescription->consultation;
         $status = ConsultationStatus::find($consultation->status_id);
         if ($status->name === 'wait for doctor') {
             $fields = $request->validated();

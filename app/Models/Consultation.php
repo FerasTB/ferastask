@@ -25,7 +25,7 @@ class Consultation extends Model implements HasMedia
 
     public function prescription()
     {
-        return $this->hasMany(Prescription::class, 'consultation_id');
+        return $this->hasOne(Prescription::class, 'consultation_id');
     }
 
     public function requests()

@@ -17,7 +17,7 @@ class PrescriptionIndexResource extends JsonResource
         return [
             'id' => $this->id,
             'advice' => $this->advice,
-            'drug' => $this->drugs,
+            'drug' => PrescriptionDrugResource::collection($this->drugs),
         ];
     }
 }
