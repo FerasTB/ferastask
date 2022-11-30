@@ -19,7 +19,7 @@ class PrescriptionDrugResource extends JsonResource
         return [
             'id' => $this->id,
             'drug' => new DrugResource(Drug::findOrFail($this->drug_id)),
-            'id' => new DrugOptionResource(MedicationOption::findOrFail($this->medication_option_id)),
+            'option' => new DrugOptionResource(MedicationOption::findOrFail($this->medication_option_id)),
             'duration' => $this->duration,
         ];
     }
