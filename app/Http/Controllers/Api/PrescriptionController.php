@@ -17,6 +17,7 @@ use App\Http\Requests\StorePrescriptionRequest;
 use App\Http\Requests\UpdatePrescriptionRequest;
 use App\Http\Resources\PrescriptionDrugResource;
 use App\Http\Requests\StorePrescriptionDrugRequest;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PrescriptionController extends Controller
 {
@@ -50,7 +51,7 @@ class PrescriptionController extends Controller
         if ($request->consultation_id) {
             $consultation = Consultation::findOrFail($request->consultation_id);
             $fields['patient_id'] = $consultation->patient->id;
-            $prescription = $consultation->prescriptions()->create($fields);
+            $prescription = $consultation->prescription()->create($fields);
             // $status = ConsultationStatus::where('name', 'done')->first();
             // $status_id = $status->id;
             // $consultation->update([
@@ -164,5 +165,18 @@ class PrescriptionController extends Controller
         } else {
             return response('you can not submit this consultation', Response::HTTP_BAD_REQUEST);
         }
+    }
+
+    public function downloadPDF(Prescription $prescription)
+    {
+        // return $prescription;
+        $pdf = Pdf::loadView('prescription.pdf', [
+            'prescription' =>  $prescription,
+        ]);
+        return $pdf->download('prescription.pdf');
+
+        // return view('prescription.pdf', [
+        //     'prescription' =>  $prescription,
+        // ]);
     }
 }

@@ -34,6 +34,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('pdf/{pdf}', [App\Http\Controllers\Api\ConsultationController::class, 'getPdf']);
     Route::get('audio/{audio}', [App\Http\Controllers\Api\ConsultationController::class, 'getAudio']);
     Route::delete('req/{req}/attachment', [App\Http\Controllers\Api\RequestController::class, 'deleteAttachment']);
+    Route::get('/prescription/download/{prescription}', [App\Http\Controllers\Api\PrescriptionController::class, 'downloadPDF']);
+    Route::get('prescription', [App\Http\Controllers\Api\PrescriptionController::class, 'index']);
+    Route::get('prescription/{prescription}', [App\Http\Controllers\Api\PrescriptionController::class, 'show']);
     Route::group(['middleware' => 'is_admin'], function () {
         Route::apiResource('user/manager', App\Http\Controllers\Api\UserController::class);
         Route::put('ticket/{ticket}', [App\Http\Controllers\Api\TicketController::class, 'update']);
@@ -48,7 +51,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::put('prescription/{prescription}/drug/{drug}/edit', [App\Http\Controllers\Api\PrescriptionController::class, 'editDrug']);
         Route::delete('prescription/{prescription}/drug/{drug}', [App\Http\Controllers\Api\PrescriptionController::class, 'deleteDrug']);
         Route::get('prescription/{prescription}/submit', [App\Http\Controllers\Api\PrescriptionController::class, 'submitPrescription']);
-        Route::apiResource('prescription', App\Http\Controllers\Api\PrescriptionController::class);
-        Route::apiResource('{consultation}/req', App\Http\Controllers\Api\RequestController::class);
+        Route::post('prescription', [App\Http\Controllers\Api\PrescriptionController::class, 'store']);
+        Route::put('prescription/{prescription}', [App\Http\Controllers\Api\PrescriptionController::class, 'update']);
     });
 });
