@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/prescription/download/{prescription}', [App\Http\Controllers\Api\PrescriptionController::class, 'downloadPDF']);
     Route::get('prescription', [App\Http\Controllers\Api\PrescriptionController::class, 'index']);
     Route::get('prescription/{prescription}', [App\Http\Controllers\Api\PrescriptionController::class, 'show']);
-    Route::apiResource('consultation/{consultation}/req', App\Http\Controllers\Api\RequestController::class);
+    Route::apiResource('{consultation}/req', App\Http\Controllers\Api\RequestController::class);
     Route::group(['middleware' => 'is_admin'], function () {
         Route::apiResource('user/manager', App\Http\Controllers\Api\UserController::class);
         Route::put('ticket/{ticket}', [App\Http\Controllers\Api\TicketController::class, 'update']);
